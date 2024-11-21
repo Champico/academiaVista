@@ -1,0 +1,256 @@
+:root {
+    --color-letra-placeholder-focus: #333;
+    --color-letra-placeholder-nofocus: #555;
+    --color-letra-input: #111;
+    --color-linea-seleccionada: #222;
+}
+
+
+
+/* - - G E N E R A L - -*/
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    color: #212529;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.titulo {
+    margin: 0;
+    font-weight: 300;
+    color: #67666e;
+    font-size: 1.87rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+/* - - I M A G E N   D E L  C O S T A D O - -*/
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.bannerSideContainer {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.bannerSideImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+
+
+
+/* - - F O R M U L A R I O   D E  L O G I N    C O N T E N E D O R*/
+.loginSideContainer {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.loginContainer {
+    max-width: 350px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* -- L O G O  D E  A C A D E M I A  */
+.logoAcademiaContainer {
+    text-align: center;
+    margin: 0;
+
+}
+
+.logoAcademia {
+    max-width: 100%;
+    margin: 0;
+}
+
+
+/* F O R M U L A R I O  */
+.LoginFormContainer {
+    width: 350px;
+    padding: 0;
+    margin: 0;
+}
+
+.loginForm {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.errorInfo{
+    display: none;
+    border: 1px solid #f00;
+    background-color: transparent;
+    color: #f00;
+    width: 20px;
+    border-radius: 3px;
+}
+
+
+/* - - I N P U T S - -*/
+.inputContainer {
+    position: relative;
+    margin: 20px 0;
+}
+
+/* Input */
+.formInput {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid var(--color-letra-placeholder-nofocus);
+    outline: none;
+    background-color: transparent;
+    color: var(--color-letra-input);
+    font-size: 16px;
+}
+
+/* Etiqueta Label */
+.formLabel {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    padding: 0 5px;
+    color: var(--color-letra-placeholder-nofocus);
+    font-size: 14px;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+.formInput:focus {
+    border-bottom: 1px solid var(--color-letra-placeholder-focus);
+}
+
+.formInput:focus ~ .formLabel,
+.formInput:valid ~ .formLabel{
+    top: 0;
+    font-size: 10px;
+}
+
+.formInput:not(:placeholder-shown) ~ .formLabel {
+    top: 0;
+    font-size: 10px;
+    color: var(--color-letra-placeholder-focus);
+}
+
+
+
+
+/* - - B O T O N - -*/
+.button {
+    border: 1px solid rgb(34, 137, 31);
+    color: rgb(255, 255, 255);
+    background: rgb(34, 137, 31);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 32px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px !important;
+    appearance: button;
+    display: inline-block;
+    width: 100%;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    cursor: pointer;
+    outline: 0px !important;
+    border-radius: 4px !important;
+    box-sizing: border-box;
+    position: relative;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0px;
+    min-width: 88px;
+    padding: 0px 15px;
+    overflow: visible;
+    text-transform: none;
+}
+
+
+
+/* > > > > >  R  E  S  P  O  N  S  I  V  E  < < < < */
+
+/* - - Pantalla de 1000px maximpo - -*/
+@media screen and (max-width: 1000px) and (min-width: 751px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .bannerSideContainer {
+        height: 20vh;
+        width: 100vw;
+    }
+
+    .loginSideContainer{
+        width: 100vw;
+        height: 100%;
+    }
+}
+
+/* - - Pantalla de maximo 750px - -*/
+@media screen and (max-width: 750px) {
+    .container {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .bannerSideContainer {
+        display: none;
+    }
+
+    .bannerSideImg {
+        display: none;
+    }
+
+    .loginContainer{
+        max-width: 350px;
+        min-width: 100px;
+    }
+
+    .loginForm{
+        max-width: 350px;
+        min-width: 100px;
+    }
+}

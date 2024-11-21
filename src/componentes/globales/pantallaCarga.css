@@ -1,0 +1,54 @@
+.body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+  }
+  
+  #loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+ #logo {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+  
+ #logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 2;
+  }
+  
+ #spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    border: 5px solid transparent; /* Fondo transparente */
+    border-top: 5px solid #009f83;; /* Línea visible */
+    border-radius: 50%; /* Forma de círculo */
+    animation: spin 2s linear infinite; /* Gira continuamente */
+    z-index: 1;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
