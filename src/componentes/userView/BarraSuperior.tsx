@@ -1,10 +1,7 @@
 import styles from './mainContainerStyle.module.css'
-import { useUser } from './UserContext';
 
 
 const BarraSuperior = () => {
-
-    const { user } = useUser();
 
     return (
         <header className={styles.header}>
@@ -17,9 +14,9 @@ const BarraSuperior = () => {
                 </div>
 
                 <div className={styles.userContainer}>
-                    <span className={styles.userName}>{user.nombre}</span>
+                    <span className={styles.userName}>{"FELIPE DE JESIS LUCIDO LOZANO"}</span>
                     <div role="boton" className={styles.perfilButton}>
-                        <img className={styles.perfilImage} src={user.src}></img>
+                        <img className={styles.perfilImage} src={'/assets/images/perfil/gallo.jpg'}></img>
                     </div>
                 </div>
 

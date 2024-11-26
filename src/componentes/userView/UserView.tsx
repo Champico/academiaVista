@@ -1,42 +1,63 @@
-// src/componentes/userView/MainContainer.tsx
+// src/componentes/userView/UserView.tsx
 
 import BarraSuperior from './BarraSuperior'
 import Menu from './Menu'
-import { UserProvider } from './UserContext';
 import styles from './mainContainerStyle.module.css'
 import AcademiasHome from './Academias/AcademiasHome';
+import AcademiaPerfilContainer from './Academias/AcademiaPerfilContainer';
+import AcademiaCoordinadorPerContainer from './Academias/AcademiaCoordinadorPerContainer';
+import { useState} from 'react';
+import ChatTab from './Chat/chatTab';
+import ActivityTab from './Actividad/ActivityTab';
+import CalendarioTab from './Calendario/CalendarTab';
 
 const UserView = () => {
 
-    const cambiarVentana = async (id: string) => {
-        switch (id) {
-            case 'academias':
-                console.log('Se cambia a ventana principañl')
+    const [ventana, setVentana] = useState<string>('Academias')
+
+    const cambiarVentana = async (idVentana: string) => {
+        setVentana(idVentana)
+    }
+
+    const renderizarCambioVentana = () => {
+        console.log("Se renderiza Nueva ventana:::::::::::::::::::::::::")
+        switch (ventana) {
+            case 'Academias':
+                return <AcademiasHome></AcademiasHome>
                 break;
-            case 'miacademia':
-                console.log('Se cambia a mi academia')
+            case 'Academia':
+                return <AcademiaPerfilContainer></AcademiaPerfilContainer>
                 break;
-            case 'academia':
-                console.log('se cambia a una ventana especifica')
+            case 'MiAcademia':
+                return <AcademiaCoordinadorPerContainer></AcademiaCoordinadorPerContainer>
                 break;
+            case 'Mensajes':
+                return <ChatTab></ChatTab>
+                break;
+                case 'Actividad':
+                    return <ActivityTab></ActivityTab>
+                    break;
+                    case 'Calendario':
+                        return <CalendarioTab></CalendarioTab>
+                        break;
             default:
-                console.log('Error')
+                <div>Error :C</div>
         }
     }
 
     return (
-        <UserProvider>
+        <>
             <div className={styles.container}>
                 <BarraSuperior></BarraSuperior>
                 <div className={styles.centerContainer}>
                     <Menu cambiarVentana={cambiarVentana}></Menu>
                     <div className={styles.dinamicContainer}>
-                        <AcademiasHome></AcademiasHome>
+                        {renderizarCambioVentana()}
                     </div>
                 </div>
                 <footer className={styles.footer}></footer>
             </div>
-        </UserProvider>
+        </>
     );
 }
 

@@ -30,6 +30,25 @@ body {
     margin-bottom: 10px;
 }
 
+.tituloUv{
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 12px;
+    font-size: 18px;
+    background-color: #0d47a1;
+    color: #fff;
+    line-height: 25px;
+    font-weight: 400;
+}
+
+
+.copyright{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
 
 
 
@@ -135,7 +154,7 @@ body {
 .formInput {
     box-sizing: border-box;
     width: 100%;
-    padding: 10px;
+    padding: 10px 10px 5px 10px;
     border: none;
     border-bottom: 1px solid var(--color-letra-placeholder-nofocus);
     outline: none;

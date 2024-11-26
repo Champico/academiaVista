@@ -5,9 +5,11 @@ import UserApp from './componentes/UserApp.tsx';
 import AdminApp from './componentes/AdminApp.tsx';
 import NotFound from './componentes/error/NotFound';
 import './fonts/roboto-font.css';
+import { UserSessionProvider } from "./contextos/UserSessionContext.tsx";
 
 const App:React.FC = () => {
   return (
+    <UserSessionProvider>
     <Router>
       <Routes>
         <Route path="/" element={<UserApp/>} />
@@ -16,6 +18,7 @@ const App:React.FC = () => {
         <Route path="/notfound" element={<NotFound />} />
       </Routes>
     </Router>
+    </UserSessionProvider>
   );
 };
 

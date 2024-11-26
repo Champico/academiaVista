@@ -59,3 +59,20 @@ INNER JOIN miembro m ON vap.id_academia_periodo = m.id_academia_periodo
 INNER JOIN usuario u ON m.id_usuario = u.id
 WHERE 
     u.correo = 'champico@uv.mx';
+
+    SELECT 
+                    vap.id_academia_periodo AS id,
+                    vap.nombre_academia AS academia,
+                    vap.nombre_periodo AS periodo,
+                    vap.nombre_coordinador AS coordinador
+                FROM 
+                    vista_academia_periodo AS vap
+                INNER JOIN coordinador AS c ON vap.id_academia = c.id_academia
+                INNER JOIN usuario AS u ON c.id_usuario = u.id
+                WHERE 
+                    u.correo = 'felipeJLL@uv.mx';
+
+SELECT correo, clave, nombre, paterno, materno, rol, id_facultad FROM usuario WHERE correo ='champico@uv.mx';
+	
+             
+             

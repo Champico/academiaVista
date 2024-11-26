@@ -1,31 +1,43 @@
 // src/componentes/Login.tsx
 
 import styles from './loginStyle.module.css'
-import { useNavigate } from "react-router-dom";
+import { useState} from 'react';
+import { useUserSession } from '../../../contextos/UserSessionContext'
 
-// Componente de Login
 const Login = () => {
-    const navigate = useNavigate();
+    //Contexto
+    const {setUserSession} = useUserSession();
+
+    const [error, setError] = useState<string>("Correcto")
 
     async function validarCredenciales(email: string, password: string) {
-        let error = ""
+        let errorMsg = ""
         const patronCorreo = /^[a-zA-Z0-9._%+-]{6,30}@uv\.mx$/
 
-        if (email === "") error = "Usuario requerido"
-        if (password === "") error += "Contraseña requerida"
+        if (email === "") errorMsg = "Usuario requerido"
+        if (password === "") errorMsg += "Contraseña requerida"
         if (!patronCorreo.test(email)) return "Usuario y/o contraseña incorrectos"
 
-        return error
+        return errorMsg
     }
 
     function mostrarMensajeError(error: string) {
-        console.log(error)
+        setError(error)
     }
 
     function eliminarMensajeError() {
-        console.log("Se elimina")
+        setError("Correcto")
     }
 
+    function errorMensaje(){
+
+        if(error !== "Correcto"){
+            return <span className={styles.errorInfo}>{error}</span>
+        }else{
+            return
+        }
+
+    }
 
     // > > > > > E  N  V  I  O   D  E   F  O  R  M  U  L  A  R  I  O  < < < < < <
     const handleSubmit = async (event: React.FormEvent) => {
@@ -42,7 +54,7 @@ const Login = () => {
         } else {
             eliminarMensajeError()
             const url = 'http://localhost:1235/user/session/login'; // Cambia la URL a la ruta de tu servidor
-            
+
             const body = {
                 correo: email,
                 clave: password
@@ -53,30 +65,33 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(body)
             });
 
+            console.log("Respuesta del servidor: ", response)
 
             if (response.ok) {
                 const data = await response.json();
                 if (!data.error) {
-                    navigate('/');
+                    setUserSession(1)
                 } else {
                     mostrarMensajeError(data.error)
                 }
             } else {
                 mostrarMensajeError(error)
             }
-
         };
-
-
-
     };
 
 
     return (
         <div className={styles.container}>
+
+            <span className={styles.tituloUv}>Universidad Veracruzana</span>
+            <span className={styles.copyright}>© 2024 Universidad Veracruzana. Todos los derechos reservados</span>
+
+
             <div className={styles.bannerSideContainer}>
                 <img className={styles.bannerSideImg} src="/assets/images/academia-src/banner.jpg" alt="Imagen de computadora" height="100px"></img>
             </div>
@@ -85,7 +100,7 @@ const Login = () => {
                 <div className={styles.loginContainer}>
                     <div className={styles.logoAcademiaContainer}>
                         <img className={styles.logoAcademia} src="/assets/images/academia-src/a-logo.png" alt="Logo de Academia" />
-                        <span className={styles.errorInfo}>El usuario y/o la contraseña es incorrecta</span>
+                        {errorMensaje()}
                         <h1 className={styles.titulo}>Iniciar sesión</h1>
 
                         <div className={styles.loginFormContainer}>

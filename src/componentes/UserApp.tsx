@@ -1,56 +1,59 @@
-import { useState, useEffect } from 'react';
+// componentes/UserApp.tsx
+
+import {useEffect } from 'react';
+import { useUserSession } from '../contextos/UserSessionContext'
 import Login from './userView/Login/Login';
 import UserView from './userView/UserView';
-import LoadingScreen from './globales/loadingScreen';
+import LoadingScreen from './globales/LoadingScreen';
 
 const UserApp = () => {
-  const [userState, setUserState] = useState<number>(0); // 0: no logueado, 1: logueado, 2: error
-  const [loading, setLoading] = useState<boolean>(true); // Indicador de carga
+  //Contexto
+  const { userSession, setUserSession } = useUserSession();
 
+  //Solo hacer al iniciar
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('http://localhost:1235/user/main', {
-          method: 'GET',
-          credentials: 'include', 
-        });
-        console.log(response)
-        if (response) {
-          const data = await response.json();
-          if (data.message === 'No ha iniciado sesión') {
-            setUserState(0); // Usuario no logueado
-          } else {
-            setUserState(1); // Usuario autenticado
-          }
-        } else {
-          setUserState(2); // Error o conexión fallida
-        }
-      } catch {
-        setUserState(2); // Error de conexión
-      } finally {
-        setLoading(false); // Deja de mostrar la pantalla de carga
-      }
-    };
+    const timer = setTimeout(async () => {
+      await fetchUserData();
+    }, 2000);
 
-    fetchUserData();
+    return () => clearTimeout(timer);
   }, []);
 
-  // Renderizar pantalla de carga mientras se obtiene la respuesta
-  if (loading) {
-    return <LoadingScreen />;
+  const fetchUserData = async () => {
+
+    try {
+      const url = 'http://localhost:1235/user/session/status'
+      const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+      if (response) {
+        const data = await response.json();
+        if (data.message === 'No ha iniciado sesión') {
+          setUserSession(0);
+        } else {
+          setUserSession(1);
+        }
+      } else {
+        setUserSession(0);
+      }
+    } catch {
+      setUserSession(0);
+    }
   }
 
-  // Renderizar componente según el estado del usuario
-  if (userState === 0) {
+  if (userSession === null) {
+    return <LoadingScreen/>
+  }
+
+  if (userSession === 1) {
+    return <UserView/>;
+  }
+
+  if (userSession === 0) {
     return <Login />;
   }
-
-  if (userState === 1) {
-    return <UserView />;
-  }
-
-  // Si hay un error o el fetch falla, se podría mostrar una vista de error
-  return <div>Error de conexión. Intenta nuevamente más tarde.</div>;
 };
 
 export default UserApp;

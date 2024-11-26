@@ -131,13 +131,13 @@ justify-content: space-between;
     margin: 0;
 }
 
-.menuList{
+.menuList{ /* Lista menu */
     padding: 0; /*Vertical - horizontal*/
     margin: 0;
     list-style: none;
 }
 
-.menuItem{
+.menuItem{  /* Boton del menu */
     padding: 12px 0;/*Vertical - horizontal*/
     border-left: 8px solid transparent;
     font-size: 1.08rem;
@@ -148,27 +148,35 @@ justify-content: space-between;
 }
 
 .menuItem:hover{
-    color: #009f83;
+   color: #009f83;
    border-left: 8px solid #009f83;
 }
 
 .menuItemSelected {
-    /* Color para el elemento seleccionado */
     color: #009f83;
     border-left: 8px solid #009f83;
 }
 
-.menuItemselected .iconItem{
-    filter: grayscale(100%) opacity(0.4);
-}
 
-.iconItem{
-    filter: grayscale(100%) opacity(0.85);
+.iconItem {
+    fill:#212529;
+    color: #212529;
     height: 25px;
     width: 25px;
     object-fit: cover;
     margin-left: 6px;
 }
+
+.activeIcon {
+    color: #009f83;
+    fill: #009f83;
+}
+
+.inactiveIcon {
+    color: #212529;
+    fill: #212529;
+}
+
 
 .textItem{
     padding: 0 10px;

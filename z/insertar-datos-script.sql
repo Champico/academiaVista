@@ -11,17 +11,8 @@
 -- 6. INSERTAR PERIODOS Y CANALES
 -- 7- INSERTAR OTROS DATOS
 
-
-
-
-
-
-
-
-
 -- ////////////////////////////////////////////////////////////////////////////////////////////////// --
 -- / / / / / / / / / / / / / / / / / D A T O S  G E N E R A L E S  / / / / / / / / / / / / / / / / /--
-
 
 -- I N F O R M A C I O N  D E  R E G I O N E S --
 INSERT INTO region(id, nombre, direccion, colonia, codigo_postal, num_telefono, nombre_rector, es_vicerrectoria)
@@ -44,7 +35,6 @@ VALUES (1, 'Artes'),
        (6, 'Técnica'),
        (0, 'Sin Área Académica');
 UPDATE area_academica SET id = 0 WHERE id = 7;
-
 -- Informacion de camus sacada de: https://www.uv.mx/orgmet/general/ent-acad-por-area/ - -
 
 -- I N F O R M A C I O N  D E  N I V E L  E D U C A T I V O --
@@ -64,34 +54,10 @@ UPDATE nivel_educativo SET id = 0 WHERE id = 6;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- ////////////////////////////////////////////////////////////////////////////////////////////////// --
 -- / / / / / / / / / / / / I N F O R M A C I O N  D E  F A C U L T A D E S / / / / / / / / / / / /--
 
-
 -- F A C U L T A D E S  D E  X A L A P A --
-
 INSERT INTO facultad(codigo, nombre, direccion, colonia, codigo_postal, num_telefono, nombre_director, id_region, id_area) VALUES 
 ('FAPX-GE-M-01', 'Facultad de Artes Plásticas', 'Calle Imaginaria 123', 'Centro', 91000, '123456789', 'Juan Pérez', 1, 1),
 ('FDAX-GE-M-01', 'Facultad de Danza', 'Avenida de los Movimientos 456', 'Centro', 91000, '987654321', 'María López', 1, 1),
@@ -202,32 +168,6 @@ INSERT INTO facultad (codigo, nombre) VALUES
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- ////////////////////////////////////////////////////////////////////////////////////////////////// --
 -- / / / / / / / / / / / / / / / C R E A C I O N  D E  U S U A R I O S / / / / / / / / / / / / / / / --
 
@@ -290,43 +230,12 @@ INSERT INTO usuario (correo, clave, nombre, paterno, materno, rol) VALUES
 ('jocharan@uv.mx', 'defaultpass', 'Jorge Octavio', 'Ocharán', 'Hernández', 'Coordinador'),
 ('chperez@uv.mx', 'defaultpass', 'Christian', 'Pérez', 'Salazar', 'Coordinador');
 
-
 -- A G R E G A R  F A C U L T A D  A   L O S  D O C E N T E S  C R E A D O S --
 UPDATE usuario
 SET id_facultad = (SELECT id FROM facultad WHERE codigo="FEIX-GE-M-01")
 WHERE correo != 'A';
 
 -- ////////////////////////////////////////////////////////////////////////////////////////////////// --
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -400,38 +309,14 @@ INSERT INTO coordinador (id_usuario, id_academia) VALUES
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- ////////////////////////////////////////////////////////////////////////////////////////////////// --
 -- / / / / / / / / / C R E A R  P E R I O D O S  Y  C A N A L E S   2 0 2 4 / / / / / / / / / / / --
 
-
--- Crear el periodo AGO24-DEC24
-INSERT INTO periodo (nombre, fecha_inicio, fecha_termino)
-VALUES ('AGO24-DEC24', '2024-08-20', '2024-12-10');
+-- Crear periodos
+INSERT INTO periodo (nombre, fecha_inicio, fecha_termino) VALUES ('AGO24-DEC24', '2024-08-20', '2024-12-10');
+INSERT INTO periodo (nombre, fecha_inicio, fecha_termino) VALUES ('FEB24-JUN24', '2024-02-20', '2024-05-10');
+INSERT INTO periodo (nombre, fecha_inicio, fecha_termino) VALUES ('AGO23-DEC23', '2023-08-20', '2023-12-10');
+INSERT INTO periodo (nombre, fecha_inicio, fecha_termino) VALUES ('FEB23-JUN23', '2023-02-20', '2023-05-10');
 
 -- Obtener el ID del periodo creado
 SET @id_periodo = (SELECT id FROM periodo WHERE nombre = 'AGO24-DEC24');
@@ -452,6 +337,80 @@ SELECT 'General', 'all', 'all', id FROM academia_periodo WHERE id_periodo = @id_
 
 -- Verificar los canales creados
 SELECT * FROM canal WHERE id_academia_periodo IN (SELECT id FROM academia_periodo WHERE id_periodo = @id_periodo);
+
+-- C R E A R   U S U A R I O   P R U E B A  --
+-- INSERT INTO usuario (correo, clave, nombre, paterno, materno, rol) VALUES 
+-- ('champico@uv.mx', 'defaultpass', 'Edgar Yael', 'Cortes', 'Carrillo', 'Coordinador');
+
+-- C R E A R  S E G U N D O  U S U A R I O  P R U E B A --
+-- INSERT INTO usuario (correo, clave, nombre, paterno, materno, rol) VALUES 
+-- ('felipeJLL@uv.mx', 'defaultpass', 'Felipe de Jesus', 'Lucido', 'Lozano', 'coordinador');
+
+DELETE FROM usuario WHERE correo='felipeJLL@uv.mx';
+
+INSERT INTO academia (codigo, nombre) VALUES ('FEIX-M-T-PG', 'Academia de gallos');
+
+INSERT INTO coordinador (id_usuario, id_academia) VALUES
+( ( SELECT id FROM usuario WHERE correo='felipeJLL@uv.mx'), ( SELECT id FROM academia WHERE codigo='FEIX-M-T-PG' ) );
+
+INSERT INTO academia_periodo (id_academia, id_periodo) VALUES
+( ( SELECT id FROM academia WHERE codigo='FEIX-M-T-PG' ), (SELECT id FROM periodo WHERE nombre = 'AGO24-DEC24')),
+( ( SELECT id FROM academia WHERE codigo='FEIX-M-T-PG' ), (SELECT id FROM periodo WHERE nombre = 'FEB24-JUN24')),
+( ( SELECT id FROM academia WHERE codigo='FEIX-M-T-PG' ), (SELECT id FROM periodo WHERE nombre = 'AGO23-DEC23')),
+( ( SELECT id FROM academia WHERE codigo='FEIX-M-T-PG' ), (SELECT id FROM periodo WHERE nombre = 'FEB23-JUN23'));
+
+INSERT INTO miembro(id_usuario, id_academia_periodo) VALUES 
+(   ( SELECT id FROM usuario WHERE correo='felipeJLL@uv.mx'), ( SELECT id_academia_periodo FROM vista_academia_periodo WHERE id_academia = 3) ),
+(   ( SELECT id FROM usuario WHERE correo='felipeJLL@uv.mx'), ( SELECT id_academia_periodo FROM vista_academia_periodo WHERE id_academia = 4) ),
+(   ( SELECT id FROM usuario WHERE correo='felipeJLL@uv.mx'), ( SELECT id_academia_periodo FROM vista_academia_periodo WHERE id_academia = 5) ),
+(   ( SELECT id FROM usuario WHERE correo='felipeJLL@uv.mx'), ( SELECT id_academia_periodo FROM vista_academia_periodo WHERE id_academia = 9) ),
+(   ( SELECT id FROM usuario WHERE correo='felipeJLL@uv.mx'), ( SELECT id_academia_periodo FROM vista_academia_periodo WHERE id_academia = 10) ),
+(   ( SELECT id FROM usuario WHERE correo='felipeJLL@uv.mx'), ( SELECT id_academia_periodo FROM vista_academia_periodo WHERE id_academia = 11) );
+
+                SELECT 
+                    vap.id_academia_periodo AS id,
+                    vap.nombre_academia AS academia,
+                    vap.nombre_periodo AS periodo,
+                    vap.nombre_coordinador AS coordinador
+                FROM 
+                    vista_academia_periodo AS vap
+                INNER JOIN miembro AS m ON vap.id_academia_periodo = m.id_academia_periodo
+                INNER JOIN usuario AS u ON m.id_usuario = u.id
+                WHERE 
+                    u.correo = 'felipeJLL@uv.mx';
+                    
+SELECT 
+                                    a.nombre AS nombre_academia
+                                FROM 
+                                    academia a
+                                INNER JOIN coordinador c ON a.id = c.id_academia
+                                INNER JOIN usuario u ON c.id_usuario = u.id
+                                WHERE 
+                                u.correo = 'felipeJLL@uv.mx';
+                                
+                                SELECT 
+                    id_academia AS id,
+                    nombre_academia AS academia,
+                    nombre_periodo AS periodo,
+                    nombre_coordinador AS coordinador
+                FROM 
+                    vista_academia_periodo
+                WHERE 
+                    correo_coordinador = 'felipeJLL@uv.mx';
+                    
+                    SELECT * FROM vista_academia_periodo;
+
+
+SELECT 
+    a.nombre,
+    a.codigo,
+    a.id
+FROM 
+    academia a
+INNER JOIN coordinador c ON a.id = c.id_academia
+INNER JOIN usuario u ON c.id_usuario = u.id
+WHERE 
+    u.correo = 'felipeJLL@uv.mx';
 
 -- ////////////////////////////////////////////////////////////////////////////////////////////////// --
 
@@ -929,25 +888,25 @@ INSERT INTO administrador (correo, clave, nombre, paterno, materno, fecha_creaci
 
 -- I N F O R M A C I O N  D E  J E F E S  D E  C A R R E R A --
 -- Agregar usuarios a la tabla usuario
-INSERT INTO usuario (correo, clave, nombre, paterno, materno, fecha_creacion) VALUES
-('zmorales@uv.mx', 'defaultpass', 'Zoylo', 'Morales', 'Romero', NOW()),
-('jocharan@uv.mx', 'defaultpass', 'Jorge Octavio', 'Ocharán', 'Hernández', NOW()),
-('jmendez@uv.mx', 'defaultpass', 'Jesús Roberto', 'Mendez', 'Ortiz', NOW()),
-('chperez@uv.mx', 'defaultpass', 'Christian', 'Pérez', 'Salazar', NOW());
+-- INSERT INTO usuario (correo, clave, nombre, paterno, materno, fecha_creacion) VALUES
+-- ('zmorales@uv.mx', 'defaultpass', 'Zoylo', 'Morales', 'Romero', NOW()),
+-- ('jocharan@uv.mx', 'defaultpass', 'Jorge Octavio', 'Ocharán', 'Hernández', NOW()),
+-- ('jmendez@uv.mx', 'defaultpass', 'Jesús Roberto', 'Mendez', 'Ortiz', NOW()),
+-- ('chperez@uv.mx', 'defaultpass', 'Christian', 'Pérez', 'Salazar', NOW());
 
 -- Agregar roles a la tabla usuario_roles
-INSERT INTO usuario_roles (correo, es_docente,es_coordinador, es_jefe_carrera) VALUES
-('zmorales@uv.mx', TRUE, FALSE, TRUE),
-('jocharan@uv.mx', TRUE, TRUE, TRUE),
-('jmendez@uv.mx', TRUE, FALSE, TRUE),
-('chperez@uv.mx', TRUE, TRUE, TRUE);
+-- INSERT INTO usuario_roles (correo, es_docente,es_coordinador, es_jefe_carrera) VALUES
+-- ('zmorales@uv.mx', TRUE, FALSE, TRUE),
+-- ('jocharan@uv.mx', TRUE, TRUE, TRUE),
+-- ('jmendez@uv.mx', TRUE, FALSE, TRUE),
+-- ('chperez@uv.mx', TRUE, TRUE, TRUE);
 
 -- Agregar jefes de carrera a la tabla jefe_carrera
-INSERT INTO jefe_carrera (correo, id_programa) VALUES
-('zmorales@uv.mx', 'EST-12433'),
-('jocharan@uv.mx', 'IS-12436'),
-('jmendez@uv.mx', 'TC-12440'),
-('chperez@uv.mx', 'RSC-12438');
+-- INSERT INTO jefe_carrera (correo, id_programa) VALUES
+-- ('zmorales@uv.mx', 'EST-12433'),
+-- ('jocharan@uv.mx', 'IS-12436'),
+-- ('jmendez@uv.mx', 'TC-12440'),
+-- ('chperez@uv.mx', 'RSC-12438');
 
 
 
@@ -1001,51 +960,5 @@ INSERT INTO experiencia_educativa (id_ee, nombre, fecha_creacion, id_programa, i
 
 
 
-
-
--- C R E A M O S  U N O S  U S U A R I O S  D E O T R A S  F A C U L T A D E S --
-
-INSERT INTO usuario (correo, clave, nombre, paterno, materno, fecha_creacion, id_facultad) VALUES 
-('user1@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Pepe', 'Paterno', 'Materno', NOW(), 'FAPX-GE-M-01'),
-('user2@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Pablo', 'Paterno', 'Materno', NOW(), 'FDAX-GE-M-01'),
-('user3@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Paola', 'Paterno', 'Materno', NOW(), 'FMUX-GE-M-01'),
-('user4@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Pancho', 'Paterno', 'Materno', NOW(), 'FTX-GE-M-01'),
-('user5@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Patricia', 'Paterno', 'Materno', NOW(), 'FBX-GE-M-01'),
-('user6@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Pamela', 'Paterno', 'Materno', NOW(), 'FCAX-GE-M-01'),
-('user7@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Paco', 'Paterno', 'Materno', NOW(), 'FBAX-GE-M-01'),
-('user8@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Paulo', 'Paterno', 'Materno', NOW(), 'FEX-GE-M-01'),
-('user9@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Padme', 'Paterno', 'Materno', NOW(), 'FMX-GE-M-01'),
-('user10@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Paloma', 'Paterno', 'Materno', NOW(), 'FNX-GE-M-01'),
-('user11@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Paulina', 'Paterno', 'Materno', NOW(), 'FOX-GE-M-01'),
-('user12@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Paz', 'Paterno', 'Materno', NOW(), 'FPSX-GE-M-01'),
-('user13@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Penelope', 'Paterno', 'Materno', NOW(), 'FCX-GE-M-01'),
-('user14@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Perla', 'Paterno', 'Materno', NOW(), 'FECX-GE-M-01'),
-('user15@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Petra', 'Paterno', 'Materno', NOW(), 'FASX-GE-M-01'),
-('user16@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Pascual', 'Paterno', 'Materno', NOW(), 'FDX-GE-M-01'),
-('user17@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Perseo', 'Paterno', 'Materno', NOW(), 'FSX-GE-M-01'),
-('user18@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Patricio', 'Paterno', 'Materno', NOW(), 'FAX-GE-M-01'),
-('user19@uv.mx', '9eb39bbabf8750a191aee49d73416093', 'Piedad', 'Paterno', 'Materno', NOW(), 'FFX-GE-M-01');
-
-
-INSERT INTO usuario_roles (correo, es_docente, es_coordinador, es_jefe_carrera) VALUES 
-('user1@uv.mx', TRUE, FALSE, FALSE),
-('user2@uv.mx', TRUE, FALSE, FALSE),
-('user3@uv.mx', TRUE, FALSE, FALSE),
-('user4@uv.mx', TRUE, FALSE, FALSE),
-('user5@uv.mx', TRUE, FALSE, FALSE),
-('user6@uv.mx', TRUE, FALSE, FALSE),
-('user7@uv.mx', TRUE, FALSE, FALSE),
-('user8@uv.mx', TRUE, FALSE, FALSE),
-('user9@uv.mx', TRUE, FALSE, FALSE),
-('user10@uv.mx', TRUE, FALSE, FALSE),
-('user11@uv.mx', TRUE, FALSE, FALSE),
-('user12@uv.mx', TRUE, FALSE, FALSE),
-('user13@uv.mx', TRUE, FALSE, FALSE),
-('user14@uv.mx', TRUE, FALSE, FALSE),
-('user15@uv.mx', TRUE, FALSE, FALSE),
-('user16@uv.mx', TRUE, FALSE, FALSE),
-('user17@uv.mx', TRUE, FALSE, FALSE),
-('user18@uv.mx', TRUE, FALSE, FALSE),
-('user19@uv.mx', TRUE, FALSE, FALSE);
 
 

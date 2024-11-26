@@ -1,0 +1,210 @@
+.chatTab{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  direction: row;
+}
+
+.tituloContactos{
+  margin: 0;
+  color: #777;
+}
+
+.contenedorListaContactos {
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    padding: 20px;
+    min-width: 300px;
+    background-color: #f9f9f9;
+    height: 100%;
+  }
+  
+  .contenedorContactos {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .contacto {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contenedorFoto {
+    margin-right: 15px;
+  }
+  
+  .foto {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .informacionContacto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .nombre {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .ultimaConexion {
+    font-size: 14px;
+    color: #888;
+    margin-top: 5px;
+  }
+  
+  .ultimoMensaje {
+    font-size: 14px;
+    color: #333;
+    margin-top: 3px;
+    font-style: italic;
+  }
+  
+
+  .chatSection {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .contactoHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #333;
+    color: #333;
+    background-color: #eee;
+  }
+  
+  .contactHContaineroFoto {
+    margin-right: 10px;
+  }
+  
+  .contactoHFoto {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .contactoHInfo {
+    flex-grow: 1;
+  }
+  
+  .contactoNombre {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .messageList {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .emisor,
+  .remitente {
+    position: relative;
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    display: inline-block;
+    font-size: 14px;
+  }
+  
+  .emisor {
+    align-self: flex-end;
+    background-color: #d1f0ff;
+    border: 1px solid #b3e1ff;
+  }
+  
+  .emisor::after {
+    content: "";
+    position: absolute;
+    right: -8px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-left: 8px solid #d1f0ff;
+    border-bottom: 8px solid transparent;
+  }
+  
+  .remitente {
+    align-self: flex-start;
+    background-color: #e6e6e6;
+    border: 1px solid #d4d4d4;
+  }
+  
+  .remitente::after {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: 8px solid #e6e6e6;
+    border-bottom: 8px solid transparent;
+  }
+  
+  .messageTime {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    text-align: right;
+  }
+  
+  .messageForm {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+  }
+  
+  .messageInput {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .sendButton {
+    background-color: #009f83;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .sendButton:hover {
+    background-color: #009f83;
+  }
+  
