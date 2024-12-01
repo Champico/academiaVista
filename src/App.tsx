@@ -7,17 +7,17 @@ import NotFound from './componentes/error/NotFound';
 import './fonts/roboto-font.css';
 import { UserSessionProvider } from "./contextos/UserSessionContext.tsx";
 
-const App:React.FC = () => {
+const App: React.FC = () => {
   return (
     <UserSessionProvider>
-    <Router>
-      <Routes>
-        <Route path="/" element={<UserApp/>} />
-        <Route path="/admin" element={<AdminApp/>} />
-        <Route path="*" element={<Navigate to="/notfound" />} />
-        <Route path="/notfound" element={<NotFound />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<UserApp />} />
+          <Route path="/admin" element={<AdminApp />} />
+          <Route path="*" element={<Navigate to="/notfound" />} />
+          <Route path="/notfound" element={<NotFound />} />
+        </Routes>
+      </Router>
     </UserSessionProvider>
   );
 };

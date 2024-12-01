@@ -1,7 +1,11 @@
 //userView/Academias/AcademiasHome
 
 import styles from './AcademiaHomeStyle.module.css'
+
+//Hooks
 import { useState, useEffect } from 'react';
+import { useUserSession } from '../../../contextos/UserSessionContext';
+
 
 interface Academia {
     id: number;
@@ -9,7 +13,7 @@ interface Academia {
     periodo?: string;
     coordinador?: string;
     codigo?: string;
-    icono?: string; 
+    icono?: string;
 }
 
 /*interface MenuProps {
@@ -18,80 +22,85 @@ const AcademiasHome = ({ cambiarVentana }: MenuProps) => {
 }*/
 
 const AcademiasHome = () => {
-    const [userAcademias, setUserAcademias] = useState<Academia[] | null>(null);
+    //Hooks
+    const [userAcademias, setUserAcademias] = useState<Academia[] | null>(null); //Academias
+    const { setUser } = useUserSession(); //User
 
     useEffect(() => {
-        fetchUserData()
+        let isMounted = true;
+
+        fetchUserData(isMounted)
+
+        return () => { isMounted = false; };
     }, []);
 
 
-    const fetchUserData = async () => {
+    const fetchUserData = async (isMounted : boolean) => {
         try {
             const response = await fetch('http://localhost:1235/user/main', {
                 method: 'GET',
                 credentials: 'include',
             });
-    
-            console.log("SE CARGA PAGINA DE ACADEMIAS")
-            if (response.ok) {  // Verifica que la respuesta fue exitosa
+
+            console.log("!INFO > Fetch para obtener academias iniciales")
+            if (response.ok) {
                 const data = await response.json();
                 if (data.message === 'No ha iniciado sesión') {
-                    console.log("NO HAY SESION")
+                    if (isMounted) { 
+                    setUser(null);
+                    }
                 } else {
-                    console.log("SI HAY SESION XD")
                     const academias = data.academias || [];
                     const miAcademia = data.miAcademia || [];
-    
-                    // Si el usuario es coordinador, combina academias con miAcademia
-                    const academiasFinal = miAcademia.length > 0 ? [ ...miAcademia,...academias] : academias;
-    
-                    // Establece las academias en el estado
+                    const academiasFinal = miAcademia.length > 0 ? [...miAcademia, ...academias] : academias;
                     setUserAcademias(academiasFinal);
-                    console.log("ACADEMIAS AGREGADAS")
                 }
             } else {
-                setUserAcademias(null); // En caso de error en la respuesta
+                if (isMounted) { 
+                setUserAcademias(null);
+                }
             }
-        } catch (error) {
-            console.error("Error fetching user data: ", error);
-            setUserAcademias(null); // En caso de error en la petición
+        } catch {
+            if (isMounted) { 
+            setUserAcademias(null);
+            }
         }
     };
 
-   /* const cambiarAVentanaAcademia = () =>{
-        cambiarVentana('Academia')
-    }*/
+    /* const cambiarAVentanaAcademia = () =>{
+         cambiarVentana('Academia')
+     }*/
 
-        const mostrarAcademias = () => {
-            if (!userAcademias || userAcademias.length === 0) {
-                return <h2 className={styles.mensajeNoAcademias}>No tiene academias</h2>;
-            }
-        
-            return (
-                <>
-                    {userAcademias[0].codigo && (
-                        <>
-                            <h2 className={styles.tituloMisAcademias}>Mi academia</h2>
-                            <AcademiaTarjeta academia={userAcademias[0]} />
-                        </>
-                    )}
-        
-                    {userAcademias.length > 1 && (
-                        <>
-                            <h2 className={styles.titulAcademias}>Academias</h2>
-                            <div className={styles.academiasContainer}>
-                                {userAcademias.slice(1).map((academia, index) => (
-                                    <AcademiaTarjeta key={index} academia={academia} />
-                                ))}
-                            </div>
-                        </>
-                    )}
-                </>
-            );
-        };
-        
+    const mostrarAcademias = () => {
+        if (!userAcademias || userAcademias.length === 0) {
+            return <h2 className={styles.mensajeNoAcademias}>No tiene academias</h2>;
+        }
 
-        
+        return (
+            <>
+                {userAcademias[0].codigo && (
+                    <>
+                        <h2 className={styles.tituloMisAcademias}>Mi academia</h2>
+                        <AcademiaTarjeta academia={userAcademias[0]} />
+                    </>
+                )}
+
+                {userAcademias.length > 1 && (
+                    <>
+                        <h2 className={styles.titulAcademias}>Academias</h2>
+                        <div className={styles.academiasContainer}>
+                            {userAcademias.slice(1).map((academia, index) => (
+                                <AcademiaTarjeta key={index} academia={academia} />
+                            ))}
+                        </div>
+                    </>
+                )}
+            </>
+        );
+    };
+
+
+
     return (
         <div className={styles.academiasHomeContainer}>
             {mostrarAcademias()}
@@ -100,7 +109,6 @@ const AcademiasHome = () => {
 };
 
 export default AcademiasHome;
-
 
 // Componente AcademiaTarjeta
 export const AcademiaTarjeta = ({ academia }: { academia: Academia }) => {

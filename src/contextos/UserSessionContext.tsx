@@ -1,22 +1,21 @@
 // src/contexts/UserSessionContext.tsx
 
 import React, { createContext, useState, useContext } from "react";
+import {User} from '../componentes/types/User.ts'
 
-// Crear el contexto con un tipo adecuado
+
 interface UserSessionContextType {
-    userSession: number | null; // null: no definido, 0: sin cuenta, 1: con cuenta
-    setUserSession: React.Dispatch<React.SetStateAction<number | null>>;
+    user: User | null; // null si no está logueado
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
-// Creamos el contexto
 export const UserSessionContext = createContext<UserSessionContextType | undefined>(undefined);
 
-// Proveedor del contexto
 export const UserSessionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [userSession, setUserSession] = useState<number | null>(null); // Inicializa en null (indefinido)
+    const [user, setUser] = useState<User | null>(null);
 
     return (
-        <UserSessionContext.Provider value={{ userSession, setUserSession }}>
+        <UserSessionContext.Provider value={{ user, setUser }}>
             {children}
         </UserSessionContext.Provider>
     );
@@ -29,3 +28,5 @@ export const useUserSession = () => {
     }
     return context;
 };
+
+

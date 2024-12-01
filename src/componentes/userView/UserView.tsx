@@ -2,7 +2,7 @@
 
 import BarraSuperior from './BarraSuperior'
 import Menu from './Menu'
-import styles from './mainContainerStyle.module.css'
+import styles from './userViewContainerStyle.module.css'
 import AcademiasHome from './Academias/AcademiasHome';
 import AcademiaPerfilContainer from './Academias/AcademiaPerfilContainer';
 import AcademiaCoordinadorPerContainer from './Academias/AcademiaCoordinadorPerContainer';
@@ -10,17 +10,17 @@ import { useState} from 'react';
 import ChatTab from './Chat/chatTab';
 import ActivityTab from './Actividad/ActivityTab';
 import CalendarioTab from './Calendario/CalendarTab';
+//import { useUserSession } from '../../contextos/UserSessionContext';
 
 const UserView = () => {
-
-    const [ventana, setVentana] = useState<string>('Academias')
+    //const {user, setUser} = useUserSession();  //Usuario
+    const [ventana, setVentana] = useState<string>('Academias') //Acdemias
 
     const cambiarVentana = async (idVentana: string) => {
         setVentana(idVentana)
     }
 
     const renderizarCambioVentana = () => {
-        console.log("Se renderiza Nueva ventana:::::::::::::::::::::::::")
         switch (ventana) {
             case 'Academias':
                 return <AcademiasHome></AcademiasHome>
@@ -44,6 +44,8 @@ const UserView = () => {
                 <div>Error :C</div>
         }
     }
+
+
 
     return (
         <>
