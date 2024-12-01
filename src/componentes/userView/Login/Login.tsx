@@ -5,13 +5,13 @@ import styles from './loginStyle.module.css'
 
 //Hooks
 import { useState } from 'react';
-import { useUserSession } from '../../../contextos/UserSessionContext'
+import { useUserSession } from '../contextos/UserSessionContext'
 
 //Tipos de dato
 import { User } from '../../types/User'
 
 const Login = () => {
-    const { user, setUser } = useUserSession();   //Usuario
+    const { setUser } = useUserSession();   //Usuario
     const [errorInfo, setErrorInfo] = useState<string | null>(null); //Mensaje error
     const [showPassword, setShowPassword] = useState(false); //Mostrar/ocultar contraseña
 
@@ -21,7 +21,7 @@ const Login = () => {
 
         if (!email) return "Usuario requerido.";
         if (!password) return "Contraseña requerida.";
-        if (!patronCorreo.test(email)) return "Formato de usuario incorrecto.";
+        if (!patronCorreo.test(email)) return "Use un correo valido con @uv.mx";
 
         return null;
     }
@@ -46,51 +46,47 @@ const Login = () => {
                 clave: password
             };
 
+            let response;
+
             try {
-                const response = await fetch(url, {
+                response = await fetch(url, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
                     body: JSON.stringify(body)
                 });
+            } catch {
+                setErrorInfo("Error de conexión")
+            }
 
+            if (!response) return
 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Mensaje que llega ", data)
-                    if (!data.correo || !data.nombre || !data.rol) throw new Error()
-
-                    const usuario: User = {
-                        correo: data.correo,
-                        nombre: data.nombre,
-                        rol: data.rol as "docente" | "coordinador",
-                        clave: data.clave || null,
-                        paterno: data.paterno || null,
-                        materno: data.materno || null,
-                        id_facultad: data.id_facultad || null,
-                        id: data.id || null
-                    };
-
-                    console.log("Usuario antes" , user)
-                    setUser(usuario)
-                    
-                    console.log("Usuario despues" , user)
-                    
-                } else {
-                    const data = await response.json();
-                    if (data.error) {
-                        throw new Error(data.error)
-                    }
-                }
-            } catch (error) {
-                if (error instanceof Error) {
-                    setErrorInfo(error.message)
+            if (response.ok) {
+                const data = await response.json();
+                console.log("->->->-> Respuesta del servidor:", data)
+                if (data.correo || data.nombre || data.rol) return
+                console.log("->->->-> Se comprobo que no esta vacio")
+                const usuario: User = {
+                    correo: data.correo,
+                    nombre: data.nombre,
+                    rol: data.rol as "docente" | "coordinador",
+                    clave: data.clave || null,
+                    paterno: data.paterno || null,
+                    materno: data.materno || null,
+                    id_facultad: data.id_facultad || null,
+                    id: data.id || null
+                };
+                console.log("->->->->  El usuario creado", usuario)
+                setUser(usuario)
+            } else {
+                const data = await response.json();
+                if (data.error) {
+                    setErrorInfo(data.error)
                 } else {
                     setErrorInfo("Error de conexión")
                 }
             }
+
 
         };
     };

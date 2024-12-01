@@ -1,7 +1,7 @@
 // src/contexts/UserSessionContext.tsx
 
 import React, { createContext, useState, useContext } from "react";
-import {User} from '../componentes/types/User.ts'
+import {User} from '../../types/User.ts'
 
 
 interface UserSessionContextType {

@@ -1,0 +1,479 @@
+/* -------------------------------------------------------------------
+                    G   E   N   E   R    A    L 
+----------------------------------------------------------------------*/
+
+/* Fondo */
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    color: #212529;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Pagina completa */
+.container {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor Barra Superior */
+.header {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+}
+
+/* Contenedor Contenido */
+.contentContainer {
+    display: flex;
+    flex-direction: row;
+    min-height: 84vh;
+    background-color: #F5F7FA;
+    margin-top: 78px;
+}
+
+/* Contenedor paginas dinamicas */
+.dinamicContainer {
+    margin-left: 0;
+    display: flex;
+}
+
+.dinamicContainerMenuExtendido {
+    margin-left: 170px;
+    transition: margin-left 0.3s ease-in-out;   
+}
+
+
+
+
+/* -------------------------------------------------------------------
+                B  A  R  R  A    S  U  P  E  R  I  O  R  
+----------------------------------------------------------------------*/
+
+
+/* Barra azul que dice Universidad Veracruzana*/
+.mainTitle {
+    display: flex;
+    justify-content: end;
+    background-color: #0d47a1;
+    box-sizing: border-box;
+    height: 22px;
+    width: 100%;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: .14286rem;
+}
+
+/* Barra principal [Menu Logo Espacio Nombre Foto] */
+.topBar {
+    background-color: #009f83;
+    display: flex;
+    direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+}
+
+/* Contenedor de los dos botones */
+.logoContainer {
+    display: flex;
+    padding: 0;
+    align-items: center;
+}
+
+/* Boton Menu hamburguesa */
+.menuButton {
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 38px;
+    height: 38px;
+    margin-right: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* Imagen Menu hamburguesa*/
+.menuButton svg {
+    fill: #fff;
+    width: 28px;
+    height: 28px;
+}
+
+/* Boton Logo Academia*/
+.mainButton {
+    box-sizing: border-box;
+    height: 50px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Imagen Logo academia*/
+.logo {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Contenedor de foto y nombre*/
+.userContainer {
+    position: relative;
+    display: flex;
+    direction: row;
+    align-items: center;
+}
+
+/* Nombre de usuario */
+.userName {
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* Boton perfil */
+.perfilButton {
+    height: 30px;
+    width: 30px;
+    padding-right: 30px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+/* Imagen dentro del boton perfil*/
+.perfilImage {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+
+
+
+/* -------------------------------------------------------------------
+    T   A   R   J   E   T   A    D   E    P   E   R   F   I   L  
+----------------------------------------------------------------------*/
+
+/* Estilos generales de la tarjeta */
+.card {
+    position: absolute;
+    top: 65px;
+    right: 10px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    box-sizing: border-box;
+    padding: 20px 0 10px 0;
+    width: 280px;
+    margin: 20px auto;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Targeta Visible */
+.cardVisible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Targeta Oculta */
+.cardHidden {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Contenedor de la información del usuario */
+.cardInfoUsuario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 0 15px 20px 15px;
+    border-bottom: 1px solid #aaa;
+}
+
+/* Datos texto */
+.cardData {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+/* Nombre del usuario */
+.cardUserName {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #111;
+}
+
+/* Correo del usuario */
+.cardUserCorreo {
+    font-size: 14px;
+    font-weight: 300;
+    color: #333;
+}
+
+
+/* Imagen de perfil */
+.cardPerfilImageContainer {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* Imagen del perfil imgen*/
+.cardPerfilImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Estilos para el contenedor del menú*/
+.cardMenuContainer {
+    padding-left: 10px;
+}
+
+/* Lista del menú */
+.cardMenuList {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Botones del menú */
+.cardButton {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.cardButton:hover {
+    background-color: #e4e4e4;
+}
+
+/* Estilo para el texto del botón */
+.cardButtonText {
+    margin-left: 10px;
+}
+
+/* Iconos */
+.cardButton svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+
+
+
+/* -------------------------------------------------------------------
+                    F   O   O   T   E   R   
+----------------------------------------------------------------------*/
+
+.footer {
+    display: flex;
+    justify-content: center;
+    background-color: #0d47a1;
+    box-sizing: border-box;
+    height: 20px;
+    width: 100%;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 300;
+    padding: .14286rem;
+
+    position: fixed;
+    bottom: 0;
+}
+
+
+
+
+/* -----------------------------------------------------------------------------------
+        M  E  N   U    L   A   T   E   R   A   L     C  O  M  P  U  T  A  D  O  R  A 
+--------------------------------------------------------------------------------------*/
+
+/* Contenedor principal barra lateral */
+.menuContainer {
+    box-sizing: border-box;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    /*box-shadow: offset-x offset-y blur-radius spread-radius color inset;*/
+    position: fixed;
+    z-index: 0;
+    transition: width 0.3s ease;
+}
+
+/* Menu Extendido / Pantalla Completa */
+.menuContainerExtendido {
+    width: 170px;
+    display: block;
+    transition: none;
+}
+
+/* Menu*/
+.menu {
+    display: 0;
+    padding: 0;
+    margin: 0;
+    transition: none;
+}
+
+/* Lista menu */
+.menuList {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Botones (Elementos de la lista) */
+.menuItem {
+    padding: 12px 0;
+    /*Vertical - horizontal*/
+    border-left: 8px solid transparent;
+    font-size: 1.08rem;
+    color: #212529;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menuItem:hover {
+    color: #009f83;
+    border-left: 8px solid #009f83;
+}
+
+.menuItemSelected {
+    color: #009f83;
+    border-left: 8px solid #009f83;
+}
+
+/* Iconos SVG*/
+.iconItem {
+    fill: #212529;
+    color: #212529;
+    height: 25px;
+    width: 25px;
+    object-fit: cover;
+    margin-left: 6px;
+    transition: none;
+}
+
+.activeIcon {
+    color: #009f83;
+    fill: #009f83;
+}
+
+.inactiveIcon {
+    color: #212529;
+    fill: #212529;
+}
+
+
+.textItem {
+    padding: 0 10px;
+    transition: none;
+}
+
+.textItemVisible {
+    display: block;
+}
+
+.textItemHidden {
+    display: none;
+}
+
+
+
+/* -----------------------------------------------------------------------------------
+        M  E  N   U    L   A   T   E   R   A   L      T  A   B  L  E  T
+--------------------------------------------------------------------------------------*/
+
+.menuContainerReducido {
+    display: block;
+    width: 50px;
+}
+
+.dinamicContainerMenuReducido {
+    display: flex;
+    margin-left: 50px;
+}
+
+
+
+
+/* -----------------------------------------------------------------------------------
+        M  E  N   U    L   A   T   E   R   A   L      T  A   B  L  E  T
+--------------------------------------------------------------------------------------*/
+
+
+/* barra lateral oculta*/
+.menuContainerOculto {
+    display: none;
+}
+
+.dinamicContainerMenuOculto {
+    display: flex;
+    margin-left: 0;
+}
+
+
+
+
+
+/* -------------------------------------------------------------------
+            R  E  S  P  O  N  S  I  V  E     D  E  S  I  G  N
+----------------------------------------------------------------------*/
+
+/* -------------------------------------------------------------------
+                B  A  R  R  A    S  U  P  E  R  I  O  R  
+----------------------------------------------------------------------*/
+
+@media screen and (max-width: 680px) {
+    /* Nombre de usuario */
+    .userName {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 360px) {
+    /* Boton Logo Academia*/
+    .mainButton {
+        display: none;
+    }
+}
+
+
+

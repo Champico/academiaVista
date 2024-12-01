@@ -1,16 +1,58 @@
-import styles from './userViewContainerStyle.module.css'
+// src/componentes/BarraSuperior.tsx
 
+import styles from './userViewContainerStyle.module.css'
 
 //Hooks
 import { useState } from 'react';
-import { useUserSession } from '../../contextos/UserSessionContext';
+import { useUserSession } from '../contextos/UserSessionContext';
+import { useMenuType } from '../contextos/MenuTypeContext';
+import { useScreenSize } from '../../../ScreenSizeContext';
+import { useNavigate } from 'react-router-dom';
 
 const BarraSuperior = () => {
     const { user, setUser } = useUserSession(); //Usuario
+    const { menuType, setMenuType } = useMenuType(); //Tipo de menu
+    const { screenSize } = useScreenSize() //Tamaño de pantalla
     const [showCard, setShowCard] = useState(false); //Mostrar/ocultar contraseña
+
 
     const handleLogout = () => {
         setUser(null);
+    }
+
+    const handleMenu = () => {
+        console.log("CLICK HAMBURGUESA > ScrenSize:", screenSize, "MenuType", menuType)
+        switch (screenSize) {
+            case 'small':
+                switch(menuType){
+                    case 'extendido': setMenuType('oculto')
+                    break
+                    case 'reducido': setMenuType('oculto')
+                    break
+                    case 'oculto': setMenuType('extendido')
+                    break  
+                }
+                break
+            case 'medium':
+                switch(menuType){
+                    case 'extendido': setMenuType('reducido')
+                    break
+                    case 'reducido': setMenuType('extendido')
+                    break
+                    case 'oculto': setMenuType('extendido')
+                    break;        
+                }
+                break
+            case 'large':
+                switch(menuType){
+                    case 'extendido': setMenuType('reducido')
+                    break
+                    case 'reducido': setMenuType('extendido')
+                    break
+                    case 'oculto': setMenuType('extendido')
+                    break;        
+                }
+        }
     }
 
     const getFullName = () => {
@@ -28,6 +70,12 @@ const BarraSuperior = () => {
             return ''
         }
     };
+
+    const navigate = useNavigate();
+
+  const goToHelp = () => {
+    navigate('/help');
+  };
 
     const salirIcon = (<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt" height="512.000000pt" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
         <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
@@ -60,6 +108,16 @@ const BarraSuperior = () => {
         </svg>
     );
 
+    const menuIcon = (
+        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt" height="512.000000pt" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M307 4839 c-99 -23 -212 -111 -258 -200 -49 -97 -60 -192 -33 -294 38 -150 163 -266 315 -295 77 -15 4392 -13 4461 1 155 33 274 144 312 294 21 79 20 140 -4 217 -37 119 -109 200 -226 255 l-59 28 -2235 2 c-1278 0 -2251 -3 -2273 -8z" />
+                <path d="M283 2946 c-106 -34 -194 -113 -246 -224 -29 -61 -32 -76 -32 -162 0 -86 3 -101 32 -162 42 -90 110 -160 192 -201 l66 -32 2265 0 2265 0 66 32 c82 41 150 111 192 201 29 61 32 76 32 162 0 86 -3 101 -32 162 -42 90 -110 160 -192 201 l-66 32 -2250 2 c-1841 1 -2258 -1 -2292 -11z" />
+                <path d="M305 1064 c-212 -52 -348 -278 -291 -489 32 -120 110 -214 224 -268 l67 -32 2255 0 2255 0 59 28 c117 55 189 136 226 255 24 77 25 138 4 217 -38 150 -163 267 -313 295 -35 7 -799 10 -2240 9 -1866 -1 -2195 -3 -2246 -15z" />
+            </g>
+        </svg>
+    );
+
     const card = (
         <div className={`${styles.card} ${showCard ? styles.cardVisible : styles.cardHidden}`}>
             <div className={styles.cardInfoUsuario}>
@@ -83,7 +141,7 @@ const BarraSuperior = () => {
                         <span className={styles.cardButtonText}>Configuración</span>
                     </button>
 
-                    <button className={`${styles.cardAyudaButton} ${styles.cardButton}`}>
+                    <button className={`${styles.cardAyudaButton} ${styles.cardButton}`} onClick={goToHelp}>
                         {helpIcon}
                         <span className={styles.cardButtonText}>Ayuda</span>
                     </button>
@@ -102,7 +160,13 @@ const BarraSuperior = () => {
             <span className={styles.mainTitle}>Universidad Veracruzana</span>
             <div className={styles.topBar}>
                 <div className={styles.logoContainer}>
-                    <img className={styles.logo} src="/assets/images/academia-src/a-logo-blanco.png" alt="logo Academia"></img>
+                    <button className={styles.menuButton} onClick={handleMenu} >
+                        {menuIcon}
+                    </button>
+                    <button className={styles.mainButton}>
+                        <img className={styles.logo} src="/assets/images/academia-src/a-logo-blanco.png" alt="logo Academia"></img>
+                    </button>
+
                 </div>
                 <div className={styles.userContainer}>
                     <span className={styles.userName}>{getFullName()}</span>

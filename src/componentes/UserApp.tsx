@@ -1,8 +1,10 @@
 // componentes/UserApp.tsx
 
 //Hooks
-import { useEffect,useState } from 'react';
-import { useUserSession } from '../contextos/UserSessionContext';
+import { useEffect, useState } from 'react';
+import { useUserSession } from './userView/contextos/UserSessionContext';
+import { MenuTypeProvider } from './userView/contextos/MenuTypeContext';
+import { VentanaProvider } from './userView/contextos/VentanaContext';
 
 //Componentes
 import Login from './userView/Login/Login';
@@ -23,8 +25,8 @@ const UserApp = () => {
     fetchUserData();
     const interval = setInterval(() => {
       fetchUserData();
-    }, 5 * 60 * 1000); 
-    return () => clearInterval(interval);  
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchUserData = async () => {
@@ -58,14 +60,19 @@ const UserApp = () => {
       }
     } catch {
       setUser(null);
-    }finally {
+    } finally {
       setLoading(false);
     }
-
   }
 
-  if (loading) return <LoadingScreen/>
-  return user ? <UserView /> : <Login />;
+  return (
+    <VentanaProvider>
+      <MenuTypeProvider>
+        {loading ? <LoadingScreen /> : <span></span>}
+        {user ? <UserView /> : <Login />}
+      </MenuTypeProvider>
+    </VentanaProvider>
+  )
 };
 
 export default UserApp;

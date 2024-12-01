@@ -4,7 +4,7 @@ import styles from './AcademiaHomeStyle.module.css'
 
 //Hooks
 import { useState, useEffect } from 'react';
-import { useUserSession } from '../../../contextos/UserSessionContext';
+import { useUserSession } from '../contextos/UserSessionContext';
 
 
 interface Academia {
